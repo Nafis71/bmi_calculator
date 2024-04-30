@@ -38,6 +38,7 @@ dependencies:
   ionicons: ^0.2.2
   flutter_svg: ^2.0.10+1
   wheel_slider: ^1.2.1
+  syncfusion_flutter_gauges: ^25.1.42
 
 dev_dependencies:
   flutter_test:

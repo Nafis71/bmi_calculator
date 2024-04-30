@@ -323,7 +323,7 @@ class _HomeState extends State<Home> {
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.9,
+                  width: MediaQuery.of(context).size.width * 0.8,
                   height: 60,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
