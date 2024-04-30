@@ -122,9 +122,9 @@ class _HomeState extends State<Home> {
                               onTap: () {
                                 setState(() {
                                   isFeet = false;
-                                  _heightValue = 0.1;
+                                  _heightValue = 1.0;
                                   minHeight = 1;
-                                  totalCount = int.parse(("${2.toInt()}0"));
+                                  totalCount = int.parse(("${2.toInt()}2"));
                                 });
                               },
                               splashColor: Colors.transparent,
@@ -184,7 +184,9 @@ class _HomeState extends State<Home> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          (isFeet) ? "${_heightValue.toStringAsFixed(1)} feet":"${_heightValue.toStringAsFixed(1)} meters",
+                          (isFeet)
+                              ? "${_heightValue.toStringAsFixed(1)} feet"
+                              : "${_heightValue.toStringAsFixed(1)} meters",
                           style: const TextStyle(
                               fontSize: 27,
                               fontWeight: FontWeight.w700,
@@ -303,7 +305,7 @@ class _HomeState extends State<Home> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          (isKg) ? "$_weightValue Kgs":"$_weightValue pounds",
+                          (isKg) ? "$_weightValue Kgs" : "$_weightValue pounds",
                           style: const TextStyle(
                               fontSize: 26,
                               fontWeight: FontWeight.w700,
@@ -351,6 +353,8 @@ class _HomeState extends State<Home> {
   }
 
   Future loadResult({required BuildContext context}) {
+    print(_heightValue);
+    print(_weightValue);
     return Navigator.push(
         context,
         MaterialPageRoute(

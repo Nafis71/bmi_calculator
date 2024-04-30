@@ -11,12 +11,13 @@ late String personGender;
 late bool isFeetChosen, isKgChosen;
 
 class Result extends StatefulWidget {
-  Result({super.key,
-    required String gender,
-    required double height,
-    required int weight,
-    required bool isFeet,
-    required bool isKg}) {
+  Result(
+      {super.key,
+      required String gender,
+      required double height,
+      required int weight,
+      required bool isFeet,
+      required bool isKg}) {
     personHeight = height;
     personGender = gender;
     personWeight = weight;
@@ -43,13 +44,13 @@ class _ResultState extends State<Result> {
       personWeight =
           (double.parse(personWeight.toString()) * 0.45359237).toInt();
     }
-    return personWeight / pow(personHeight, 2);
+    return personWeight / (pow(personHeight, 2));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
@@ -78,10 +79,7 @@ class _ResultState extends State<Result> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.6,
+                    width: MediaQuery.of(context).size.width * 0.6,
                     child: SfRadialGauge(
                       axes: [
                         RadialAxis(
@@ -144,10 +142,7 @@ class _ResultState extends State<Result> {
                 ],
               ),
               Container(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 0.9,
+                width: MediaQuery.of(context).size.width * 0.9,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20.0),
@@ -176,7 +171,9 @@ class _ResultState extends State<Result> {
                         Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Text(
-                              getMessage(), textAlign: TextAlign.justify,),
+                            getMessage(),
+                            textAlign: TextAlign.justify,
+                          ),
                         ),
                       ],
                     ),
@@ -184,10 +181,13 @@ class _ResultState extends State<Result> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
-              SvgPicture.asset("assets/images/bmi.svg",width: 300,height: 200,),
-
+              SvgPicture.asset(
+                "assets/images/bmiBack.svg",
+                width: 300,
+                height: 200,
+              ),
             ],
           ),
         ));
@@ -207,7 +207,7 @@ class _ResultState extends State<Result> {
     }
   }
 
-  String getMessage(){
+  String getMessage() {
     if (bmi < 18.5) {
       return "As a $personGender your BMI indicates that you are underweight. Consider consulting a healthcare professional for guidance on achieving a healthy weight.";
     } else if (bmi <= 24.9) {
@@ -220,5 +220,4 @@ class _ResultState extends State<Result> {
       return "As a $personGender your BMI indicates severe obesity, which can pose significant health risks. Seek support from healthcare professionals to address your weight and improve your overall health.";
     }
   }
-
 }

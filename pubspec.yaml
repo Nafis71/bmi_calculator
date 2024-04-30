@@ -39,6 +39,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
   wheel_slider: ^1.2.1
   syncfusion_flutter_gauges: ^25.1.42
+  device_preview: ^1.1.0
 
 dev_dependencies:
   flutter_test:

@@ -4,7 +4,10 @@ class GenderContainer extends StatelessWidget {
   String personGender;
   String containerGenderInfo;
 
-  GenderContainer({super.key, required this.personGender, required this.containerGenderInfo});
+  GenderContainer(
+      {super.key,
+      required this.personGender,
+      required this.containerGenderInfo});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,9 @@ class GenderContainer extends StatelessWidget {
         borderRadius: BorderRadius.circular(25.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: (containerGenderInfo == personGender)
+                ? Colors.green.withOpacity(0.2)
+                : Colors.black.withOpacity(0.1),
             spreadRadius: 0,
             blurRadius: 30,
             offset: const Offset(0, 15),
