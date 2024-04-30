@@ -162,7 +162,7 @@ class _ResultState extends State<Result> {
                     ),
                     const Icon(
                       Icons.info,
-                      color: Colors.blue,
+                      color: Colors.green,
                       size: 35,
                     ),
                     Wrap(
