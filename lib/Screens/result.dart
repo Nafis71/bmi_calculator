@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 late double bmi;
@@ -48,6 +49,7 @@ class _ResultState extends State<Result> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
@@ -56,138 +58,138 @@ class _ResultState extends State<Result> {
             icon: const Icon(Icons.arrow_back_outlined),
           ),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Your BMI Result",
-                  style: TextStyle(
-                      fontSize: 23,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.green),
-                )
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * 0.6,
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.3,
-                  child: SfRadialGauge(
-                    axes: [
-                      RadialAxis(
-                        minimum: 16,
-                        maximum: 50,
-                        maximumLabels: 5,
-                        ranges: [
-                          GaugeRange(
-                            startValue: 16,
-                            endValue: 18.4,
-                            color: Colors.red,
-                            startWidth: 2,
-                          ),
-                          GaugeRange(
-                            startValue: 18.5,
-                            endValue: 24.9,
-                            color: Colors.green,
-                          ),
-                          GaugeRange(
-                            startValue: 25,
-                            endValue: 29.9,
-                            color: Colors.yellow,
-                          ),
-                          GaugeRange(
-                            startValue: 30,
-                            endValue: 39.9,
-                            color: Colors.orange,
-                          ),
-                          GaugeRange(
-                            startValue: 40,
-                            endValue: 50,
-                            color: Colors.red,
-                            endWidth: 2,
-                          ),
-                        ],
-                        pointers: [
-                          NeedlePointer(
-                            value: bmi,
-                            enableAnimation: true,
-                            animationDuration: 2600,
-                          )
-                        ],
-                        annotations: [
-                          GaugeAnnotation(
-                            widget: Text(
-                              "${bmi.toStringAsFixed(2)}",
-                              style: TextStyle(
-                                  fontSize: 23,
-                                  fontWeight: FontWeight.bold,
-                                  color: getColor()),
-                            ),
-                            angle: 90,
-                            positionFactor: 0.5,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            Container(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width * 0.9,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      spreadRadius: 0,
-                      blurRadius: 20,
-                      offset: const Offset(0, 10),
-                      blurStyle: BlurStyle.normal,
-                    )
-                  ]),
-              child: Column(
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Icon(
-                    Icons.info,
-                    color: Colors.blue,
-                    size: 35,
-                  ),
-                  Wrap(
-                    alignment: WrapAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Text(
-                            getMessage(), textAlign: TextAlign.justify,),
-                      ),
-                    ],
+                  Text(
+                    "Your BMI Result",
+                    style: TextStyle(
+                        fontSize: 23,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.green),
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.6,
+                    child: SfRadialGauge(
+                      axes: [
+                        RadialAxis(
+                          minimum: 10,
+                          maximum: 50,
+                          maximumLabels: 5,
+                          ranges: [
+                            GaugeRange(
+                              startValue: 10,
+                              endValue: 18.4,
+                              color: Colors.red,
+                              startWidth: 2,
+                            ),
+                            GaugeRange(
+                              startValue: 18.5,
+                              endValue: 24.9,
+                              color: Colors.green,
+                            ),
+                            GaugeRange(
+                              startValue: 25,
+                              endValue: 29.9,
+                              color: Colors.yellow,
+                            ),
+                            GaugeRange(
+                              startValue: 30,
+                              endValue: 39.9,
+                              color: Colors.orange,
+                            ),
+                            GaugeRange(
+                              startValue: 40,
+                              endValue: 50,
+                              color: Colors.red,
+                              endWidth: 2,
+                            ),
+                          ],
+                          pointers: [
+                            NeedlePointer(
+                              value: bmi,
+                              enableAnimation: true,
+                              animationDuration: 2600,
+                            )
+                          ],
+                          annotations: [
+                            GaugeAnnotation(
+                              widget: Text(
+                                "${bmi.toStringAsFixed(2)}",
+                                style: TextStyle(
+                                    fontSize: 23,
+                                    fontWeight: FontWeight.bold,
+                                    color: getColor()),
+                              ),
+                              angle: 90,
+                              positionFactor: 0.5,
+                            )
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ],
               ),
-            )
-          ],
+              Container(
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width * 0.9,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        spreadRadius: 0,
+                        blurRadius: 10,
+                        offset: const Offset(0, 10),
+                        blurStyle: BlurStyle.normal,
+                      )
+                    ]),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Icon(
+                      Icons.info,
+                      color: Colors.blue,
+                      size: 35,
+                    ),
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Text(
+                              getMessage(), textAlign: TextAlign.justify,),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              SvgPicture.asset("assets/images/bmi.svg",width: 300,height: 200,),
+
+            ],
+          ),
         ));
   }
 
