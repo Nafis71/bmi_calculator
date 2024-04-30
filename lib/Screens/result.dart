@@ -125,7 +125,7 @@ class _ResultState extends State<Result> {
                           annotations: [
                             GaugeAnnotation(
                               widget: Text(
-                                "${bmi.toStringAsFixed(2)}",
+                                bmi.toStringAsFixed(2),
                                 style: TextStyle(
                                     fontSize: 23,
                                     fontWeight: FontWeight.bold,
@@ -181,7 +181,7 @@ class _ResultState extends State<Result> {
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
               SvgPicture.asset(
                 "assets/images/bmiBack.svg",
