@@ -1,3 +1,4 @@
+import 'package:animated_hint_textfield/animated_hint_textfield.dart';
 import 'package:bmi_calculator/Screens/HomeScreenWidgets/gender_container.dart';
 import 'package:bmi_calculator/Screens/result.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,20 @@ class _HomeState extends State<Home> {
       maxWeight = 180,
       selectedWeight = 50;
   bool isFeet = true, isKg = true;
+
+  late TextEditingController _editingController;
+
+  @override
+  void initState() {
+    _editingController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _editingController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,10 +93,11 @@ class _HomeState extends State<Home> {
                     ],
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 20,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(20.00),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.00, vertical: 10.00),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.max,
@@ -196,7 +212,8 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(20.00),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.00, vertical: 10.00),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.max,
@@ -314,6 +331,60 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                   ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.00),
+                        child: Text(
+                          "Age",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w700),
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        height: 50,
+                        child: AnimatedTextField(
+                          style: const TextStyle(
+                            fontSize: 18
+                          ),
+                          cursorColor: Colors.green,
+                          controller: _editingController,
+                          keyboardType: TextInputType.number,
+                          animationType: Animationtype.typer,
+                          // Use Animationtype.typer for Type Write Style animations
+                          hintTextStyle: const TextStyle(
+                            color: Colors.black,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          cursorOpacityAnimates: true,
+                          hintTexts: const [
+                            'Enter your age',
+                            'So that we can calculate',
+                            'BMI according to your age',
+                          ],
+                          decoration: const InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide:
+                              BorderSide(color: Colors.green, width: 2)),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.green, width: 2)),
+                            contentPadding: EdgeInsets.all(12),
+                          ),
+                        ),
+                      )
+                    ],
+                  )
                 ],
               ),
             ),
@@ -329,11 +400,13 @@ class _HomeState extends State<Home> {
                   height: 60,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        foregroundColor: Colors.white,
-                        elevation: 5,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.00))),
+                      backgroundColor: Colors.green,
+                      foregroundColor: Colors.white,
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.00),
+                      ),
+                    ),
                     onPressed: () {
                       loadResult(context: context);
                     },
@@ -346,7 +419,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -355,6 +428,7 @@ class _HomeState extends State<Home> {
   Future loadResult({required BuildContext context}) {
     print(_heightValue);
     print(_weightValue);
+    print(_editingController.text.toString());
     return Navigator.push(
         context,
         MaterialPageRoute(

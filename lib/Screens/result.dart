@@ -133,7 +133,7 @@ class _ResultState extends State<Result> {
                               ),
                               angle: 90,
                               positionFactor: 0.5,
-                            )
+                            ),
                           ],
                         )
                       ],

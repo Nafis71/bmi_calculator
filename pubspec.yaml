@@ -39,6 +39,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
   wheel_slider: ^1.2.1
   syncfusion_flutter_gauges: ^25.1.42
+  animated_hint_textfield: ^1.0.1
 
 dev_dependencies:
   flutter_test:
