@@ -1,7 +1,6 @@
 import 'package:animated_hint_textfield/animated_hint_textfield.dart';
 import 'package:bmi_calculator/Models/person_data.dart';
 import 'package:bmi_calculator/Screens/HomeScreenWidgets/gender_container.dart';
-import 'package:bmi_calculator/Screens/result.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:wheel_slider/wheel_slider.dart';
@@ -19,8 +18,8 @@ class _HomeState extends State<Home> {
   String gender = "male";
   double _heightValue = 5.0, interval = 0.1;
   int _weightValue = 0,
-      totalCount = 40,
-      minHeight = 2,
+      totalCount = 60,
+      minHeight = 4,
       maxWeight = 180,
       selectedWeight = 50;
   bool isFeet = true, isKg = true;
@@ -120,8 +119,8 @@ class _HomeState extends State<Home> {
                                   isFeet = true;
                                   _heightValue = 5.0;
                                   interval = 0.1;
-                                  totalCount = 40;
-                                  minHeight = 2;
+                                  totalCount = 60;
+                                  minHeight = 4;
                                 });
                               },
                               splashColor: Colors.transparent,
@@ -183,7 +182,7 @@ class _HomeState extends State<Home> {
                               setState(() {
                                 if (isFeet) {
                                   _heightValue =
-                                      double.parse((val + 3).toString());
+                                      double.parse((val + 1).toString());
                                 } else if (!isFeet) {
                                   _heightValue = val;
                                 }
@@ -436,6 +435,7 @@ class _HomeState extends State<Home> {
         _weightValue,
         isFeet,
         isKg,
+        int.tryParse(_editingController.text.toString()) ?? 2
       ),
     );
   }

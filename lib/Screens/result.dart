@@ -1,18 +1,21 @@
 import 'dart:math';
 
 import 'package:bmi_calculator/Models/person_data.dart';
+import 'package:bmi_calculator/Screens/HomeScreenWidgets/bmi_range_adults.dart';
+import 'package:bmi_calculator/Screens/HomeScreenWidgets/bmi_range_non_adults.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 late double bmi;
-
+late bool isAdult;
 late PersonData personData;
 
 class Result extends StatefulWidget {
   Result(PersonData data, {super.key}) {
     personData = data;
   }
+
   @override
   State<Result> createState() => _ResultState();
 }
@@ -20,6 +23,7 @@ class Result extends StatefulWidget {
 class _ResultState extends State<Result> {
   @override
   void initState() {
+    (personData.age > 20) ? isAdult = true : isAdult = false;
     bmi = calculateBmi();
     super.initState();
   }
@@ -68,64 +72,10 @@ class _ResultState extends State<Result> {
                 children: [
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.6,
-                    child: SfRadialGauge(
-                      axes: [
-                        RadialAxis(
-                          minimum: 10,
-                          maximum: 50,
-                          maximumLabels: 5,
-                          ranges: [
-                            GaugeRange(
-                              startValue: 10,
-                              endValue: 18.4,
-                              color: Colors.red,
-                              startWidth: 2,
-                            ),
-                            GaugeRange(
-                              startValue: 18.5,
-                              endValue: 24.9,
-                              color: Colors.green,
-                            ),
-                            GaugeRange(
-                              startValue: 25,
-                              endValue: 29.9,
-                              color: Colors.yellow,
-                            ),
-                            GaugeRange(
-                              startValue: 30,
-                              endValue: 39.9,
-                              color: Colors.orange,
-                            ),
-                            GaugeRange(
-                              startValue: 40,
-                              endValue: 50,
-                              color: Colors.red,
-                              endWidth: 2,
-                            ),
-                          ],
-                          pointers: [
-                            NeedlePointer(
-                              value: bmi,
-                              enableAnimation: true,
-                              animationDuration: 2600,
-                            )
-                          ],
-                          annotations: [
-                            GaugeAnnotation(
-                              widget: Text(
-                                bmi.toStringAsFixed(2),
-                                style: TextStyle(
-                                    fontSize: 23,
-                                    fontWeight: FontWeight.bold,
-                                    color: getColor()),
-                              ),
-                              angle: 90,
-                              positionFactor: 0.5,
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
+                    //bmi gauge meter
+                    child: (isAdult)
+                        ? BmiRangeAdults(personBmi: bmi)
+                        : BmiRangeNonAdults(personBmi: bmi),
                   ),
                 ],
               ),
@@ -179,20 +129,6 @@ class _ResultState extends State<Result> {
             ],
           ),
         ));
-  }
-
-  MaterialColor getColor() {
-    if (bmi < 18.5) {
-      return Colors.red;
-    } else if (bmi <= 24.9) {
-      return Colors.green;
-    } else if (bmi <= 29.9) {
-      return Colors.yellow;
-    } else if (bmi <= 39.9) {
-      return Colors.orange;
-    } else {
-      return Colors.red;
-    }
   }
 
   String getMessage() {
