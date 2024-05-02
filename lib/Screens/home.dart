@@ -1,6 +1,8 @@
 import 'package:animated_hint_textfield/animated_hint_textfield.dart';
 import 'package:bmi_calculator/Models/person_data.dart';
+import 'package:bmi_calculator/Screens/HomeScreenWidgets/app_banner.dart';
 import 'package:bmi_calculator/Screens/HomeScreenWidgets/gender_container.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:wheel_slider/wheel_slider.dart';
@@ -372,6 +374,9 @@ class _HomeState extends State<Home> {
                             'So that we can calculate',
                             'BMI according to your age',
                           ],
+                          onChanged: (text) {
+                            isValidAge(text);
+                          },
                           decoration: const InputDecoration(
                             enabledBorder: UnderlineInputBorder(
                                 borderSide:
@@ -425,18 +430,24 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Future loadResult({required BuildContext context}) {
+  bool isValidAge(String text) {
+    int age = int.parse(text);
+    if (age > 0 && age >=2 && age <= 120) {
+      return true;
+    }
+    ScaffoldMessenger.of(context).showMaterialBanner(appBanner(text: "Invalid age", context: context));
+    return false;
+  }
+
+  Future? loadResult({required BuildContext context}) {
+    if (!isValidAge(_editingController.text.toString())) {
+      return null;
+    }
     return Navigator.pushNamed(
       context,
       Routes.result.toString(),
-      arguments: PersonData(
-        gender,
-        _heightValue,
-        _weightValue,
-        isFeet,
-        isKg,
-        int.tryParse(_editingController.text.toString()) ?? 2
-      ),
+      arguments: PersonData(gender, _heightValue, _weightValue, isFeet, isKg,
+          int.tryParse(_editingController.text.toString()) ?? 2),
     );
   }
 }
