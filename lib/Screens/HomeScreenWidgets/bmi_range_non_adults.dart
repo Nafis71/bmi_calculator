@@ -38,6 +38,7 @@ class BmiRangeNonAdults extends StatelessWidget {
               startValue: 95,
               endValue: 100,
               color: Colors.red,
+              endWidth: 2,
             ),
           ],
           pointers: [

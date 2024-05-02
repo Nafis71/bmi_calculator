@@ -375,7 +375,7 @@ class _HomeState extends State<Home> {
                             'BMI according to your age',
                           ],
                           onChanged: (text) {
-                            isValidAge(text);
+                            isValidAge(text) ? ScaffoldMessenger.of(context).hideCurrentMaterialBanner() : ScaffoldMessenger.of(context).showMaterialBanner(appBanner(text: "Invalid age", context: context));
                           },
                           decoration: const InputDecoration(
                             enabledBorder: UnderlineInputBorder(
@@ -435,12 +435,13 @@ class _HomeState extends State<Home> {
     if (age > 0 && age >=2 && age <= 120) {
       return true;
     }
-    ScaffoldMessenger.of(context).showMaterialBanner(appBanner(text: "Invalid age", context: context));
     return false;
   }
 
   Future? loadResult({required BuildContext context}) {
-    if (!isValidAge(_editingController.text.toString())) {
+    bool shouldProceed= isValidAge(_editingController.text.toString());
+    if (!shouldProceed) {
+      (!shouldProceed) ? ScaffoldMessenger.of(context).showMaterialBanner(appBanner(text: "Invalid age", context: context)) : null;
       return null;
     }
     return Navigator.pushNamed(
