@@ -1,30 +1,18 @@
 import 'dart:math';
 
+import 'package:bmi_calculator/Models/person_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 late double bmi;
-late int personWeight;
-late double personHeight;
-late String personGender;
-late bool isFeetChosen, isKgChosen;
+
+late PersonData personData;
 
 class Result extends StatefulWidget {
-  Result(
-      {super.key,
-      required String gender,
-      required double height,
-      required int weight,
-      required bool isFeet,
-      required bool isKg}) {
-    personHeight = height;
-    personGender = gender;
-    personWeight = weight;
-    isFeetChosen = isFeet;
-    isKgChosen = isKg;
+  Result(PersonData data, {super.key}) {
+    personData = data;
   }
-
   @override
   State<Result> createState() => _ResultState();
 }
@@ -37,14 +25,14 @@ class _ResultState extends State<Result> {
   }
 
   double calculateBmi() {
-    if (isFeetChosen) {
-      personHeight = personHeight * 0.3048;
+    if (personData.isFeet) {
+      personData.setHeight = personData.height * 0.3048;
     }
-    if (!isKgChosen) {
-      personWeight =
-          (double.parse(personWeight.toString()) * 0.45359237).toInt();
+    if (!personData.isKg) {
+      personData.setWeight =
+          (double.parse(personData.weight.toString()) * 0.45359237).toInt();
     }
-    return personWeight / (pow(personHeight, 2));
+    return personData.weight / (pow(personData.height, 2));
   }
 
   @override
@@ -209,15 +197,15 @@ class _ResultState extends State<Result> {
 
   String getMessage() {
     if (bmi < 18.5) {
-      return "As a $personGender your BMI indicates that you are underweight. Consider consulting a healthcare professional for guidance on achieving a healthy weight.";
+      return "As a ${personData.gender} your BMI indicates that you are underweight. Consider consulting a healthcare professional for guidance on achieving a healthy weight.";
     } else if (bmi <= 24.9) {
-      return "As a $personGender your BMI falls within the normal range. Keep up the healthy habits to maintain your weight and overall well-being.";
+      return "As a ${personData.gender} your BMI falls within the normal range. Keep up the healthy habits to maintain your weight and overall well-being.";
     } else if (bmi <= 29.9) {
-      return "As a $personGender your BMI suggests that you are overweight. Focus on making healthy lifestyle changes, such as regular exercise and balanced nutrition, to reach a healthier weight.";
+      return "As a ${personData.gender} your BMI suggests that you are overweight. Focus on making healthy lifestyle changes, such as regular exercise and balanced nutrition, to reach a healthier weight.";
     } else if (bmi <= 39.9) {
-      return "As a $personGender your BMI suggests that you are in the obesity category. Take proactive steps to improve your health and reduce your risk of obesity-related complications.";
+      return "As a ${personData.gender} your BMI suggests that you are in the obesity category. Take proactive steps to improve your health and reduce your risk of obesity-related complications.";
     } else {
-      return "As a $personGender your BMI indicates severe obesity, which can pose significant health risks. Seek support from healthcare professionals to address your weight and improve your overall health.";
+      return "As a ${personData.gender} your BMI indicates severe obesity, which can pose significant health risks. Seek support from healthcare professionals to address your weight and improve your overall health.";
     }
   }
 }

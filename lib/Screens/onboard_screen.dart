@@ -1,4 +1,5 @@
 import 'package:bmi_calculator/Screens/home.dart';
+import 'package:bmi_calculator/enums/route_enum.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -135,8 +136,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
                       borderRadius: BorderRadius.circular(20))),
               onPressed: () {
                 if (currentIndex == contents.length - 1) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Home()));
+                  Navigator.pushReplacementNamed(context, Routes.home.toString());
                 }
                 _pageController.nextPage(
                     duration: const Duration(milliseconds: 900),

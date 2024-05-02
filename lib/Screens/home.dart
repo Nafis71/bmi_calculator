@@ -1,9 +1,12 @@
 import 'package:animated_hint_textfield/animated_hint_textfield.dart';
+import 'package:bmi_calculator/Models/person_data.dart';
 import 'package:bmi_calculator/Screens/HomeScreenWidgets/gender_container.dart';
 import 'package:bmi_calculator/Screens/result.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:wheel_slider/wheel_slider.dart';
+
+import '../enums/route_enum.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -354,9 +357,7 @@ class _HomeState extends State<Home> {
                         width: MediaQuery.of(context).size.width * 0.9,
                         height: 50,
                         child: AnimatedTextField(
-                          style: const TextStyle(
-                            fontSize: 18
-                          ),
+                          style: const TextStyle(fontSize: 18),
                           cursorColor: Colors.green,
                           controller: _editingController,
                           keyboardType: TextInputType.number,
@@ -374,8 +375,8 @@ class _HomeState extends State<Home> {
                           ],
                           decoration: const InputDecoration(
                             enabledBorder: UnderlineInputBorder(
-                              borderSide:
-                              BorderSide(color: Colors.green, width: 2)),
+                                borderSide:
+                                    BorderSide(color: Colors.green, width: 2)),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide:
                                     BorderSide(color: Colors.green, width: 2)),
@@ -426,17 +427,16 @@ class _HomeState extends State<Home> {
   }
 
   Future loadResult({required BuildContext context}) {
-    print(_heightValue);
-    print(_weightValue);
-    print(_editingController.text.toString());
-    return Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => Result(
-                gender: gender,
-                height: _heightValue,
-                weight: _weightValue,
-                isFeet: isFeet,
-                isKg: isKg)));
+    return Navigator.pushNamed(
+      context,
+      Routes.result.toString(),
+      arguments: PersonData(
+        gender,
+        _heightValue,
+        _weightValue,
+        isFeet,
+        isKg,
+      ),
+    );
   }
 }
