@@ -1,16 +1,8 @@
-# bmi_calculator
+# Bmi Calculator
 
-A new Flutter project.
+The BMI calculator is an app that can calculate an individual's BMI based on their height and weight, for both adults and nonadults.
 
-## Getting Started
+## Live Preview Link
 
-This project is a starting point for a Flutter application.
+https://bmicalculator-tonmoy.netlify.app/
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
