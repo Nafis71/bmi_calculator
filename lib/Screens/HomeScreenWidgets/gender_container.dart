@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class GenderContainer extends StatelessWidget {
-  String personGender;
-  String containerGenderInfo;
+  final String personGender;
+  final String containerGenderInfo;
 
-  GenderContainer(
+  const GenderContainer(
       {super.key,
       required this.personGender,
       required this.containerGenderInfo});

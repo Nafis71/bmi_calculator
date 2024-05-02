@@ -2,7 +2,6 @@ import 'package:animated_hint_textfield/animated_hint_textfield.dart';
 import 'package:bmi_calculator/Models/person_data.dart';
 import 'package:bmi_calculator/Screens/HomeScreenWidgets/app_banner.dart';
 import 'package:bmi_calculator/Screens/HomeScreenWidgets/gender_container.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:wheel_slider/wheel_slider.dart';

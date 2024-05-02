@@ -1,11 +1,10 @@
 import 'dart:math';
-
+import 'package:bmi_calculator/Models/bmi_message.dart';
 import 'package:bmi_calculator/Models/person_data.dart';
 import 'package:bmi_calculator/Screens/HomeScreenWidgets/bmi_range_adults.dart';
 import 'package:bmi_calculator/Screens/HomeScreenWidgets/bmi_range_non_adults.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 late double bmi;
 late bool isAdult;
@@ -109,7 +108,11 @@ class _ResultState extends State<Result> {
                         Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Text(
-                            getMessage(),
+                            (isAdult)
+                                ? BmiMessage.getMessageAdult(
+                                    bmi: bmi, personData: personData)
+                                : BmiMessage.getMessageNonAdult(
+                                    bmi: bmi, personData: personData),
                             textAlign: TextAlign.justify,
                           ),
                         ),
@@ -129,19 +132,5 @@ class _ResultState extends State<Result> {
             ],
           ),
         ));
-  }
-
-  String getMessage() {
-    if (bmi < 18.5) {
-      return "As a ${personData.gender} your BMI indicates that you are underweight. Consider consulting a healthcare professional for guidance on achieving a healthy weight.";
-    } else if (bmi <= 24.9) {
-      return "As a ${personData.gender} your BMI falls within the normal range. Keep up the healthy habits to maintain your weight and overall well-being.";
-    } else if (bmi <= 29.9) {
-      return "As a ${personData.gender} your BMI suggests that you are overweight. Focus on making healthy lifestyle changes, such as regular exercise and balanced nutrition, to reach a healthier weight.";
-    } else if (bmi <= 39.9) {
-      return "As a ${personData.gender} your BMI suggests that you are in the obesity category. Take proactive steps to improve your health and reduce your risk of obesity-related complications.";
-    } else {
-      return "As a ${personData.gender} your BMI indicates severe obesity, which can pose significant health risks. Seek support from healthcare professionals to address your weight and improve your overall health.";
-    }
   }
 }

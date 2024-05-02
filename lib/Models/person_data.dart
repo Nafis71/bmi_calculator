@@ -1,7 +1,8 @@
 class PersonData {
   final String _gender;
   double _height;
-  int _weight, _age;
+  int _weight;
+  final int _age;
   final bool _isFeet, _isKg;
 
   PersonData(
