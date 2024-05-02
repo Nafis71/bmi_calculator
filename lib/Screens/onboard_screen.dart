@@ -1,6 +1,5 @@
 import 'package:bmi_calculator/enums/route_enum.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:bmi_calculator/Models/onboarding_model.dart';
 
@@ -24,12 +23,6 @@ class _OnboardScreenState extends State<OnboardScreen> {
   @override
   void dispose() {
     _pageController.dispose();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
     super.dispose();
   }
 
@@ -133,12 +126,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20))),
               onPressed: () {
-                if (currentIndex == contents.length - 1) {
-                  Navigator.pushReplacementNamed(context, Routes.home.toString());
-                }
-                _pageController.nextPage(
-                    duration: const Duration(milliseconds: 900),
-                    curve: Curves.bounceOut);
+                pageController();
               },
               child: Text(
                 (currentIndex == contents.length - 1)
@@ -152,6 +140,15 @@ class _OnboardScreenState extends State<OnboardScreen> {
         ]);
       },
     ));
+  }
+
+  void pageController(){
+    if (currentIndex == contents.length - 1) {
+      Navigator.pushReplacementNamed(context, Routes.home.toString());
+    }
+    _pageController.nextPage(
+        duration: const Duration(milliseconds: 1000),
+        curve: Curves.bounceOut);
   }
 
   Container buildDot(int index, BuildContext context) {

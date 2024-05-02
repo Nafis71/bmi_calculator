@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 MaterialBanner appBanner(
-    {required String text, required BuildContext context}) {
+    {required String text,
+    required BuildContext context,
+    bool isError = true}) {
   ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
   return MaterialBanner(
-      backgroundColor: Colors.red.shade400,
+      shadowColor: Colors.black,
+      backgroundColor: (isError) ? Colors.red.shade400 : Colors.orange.shade500,
       elevation: 5,
       content: Padding(
         padding: const EdgeInsets.all(10.00),

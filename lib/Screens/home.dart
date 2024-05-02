@@ -23,7 +23,7 @@ class _HomeState extends State<Home> {
       minHeight = 4,
       maxWeight = 180,
       selectedWeight = 50;
-  bool isFeet = true, isKg = true;
+  bool isFeet = true, isKg = true, isAgeInserted = false;
 
   late TextEditingController _editingController;
 
@@ -362,7 +362,6 @@ class _HomeState extends State<Home> {
                           controller: _editingController,
                           keyboardType: TextInputType.number,
                           animationType: Animationtype.typer,
-                          // Use Animationtype.typer for Type Write Style animations
                           hintTextStyle: const TextStyle(
                             color: Colors.black,
                             overflow: TextOverflow.ellipsis,
@@ -374,7 +373,12 @@ class _HomeState extends State<Home> {
                             'BMI according to your age',
                           ],
                           onChanged: (text) {
-                            isValidAge(text) ? ScaffoldMessenger.of(context).hideCurrentMaterialBanner() : ScaffoldMessenger.of(context).showMaterialBanner(appBanner(text: "Invalid age", context: context));
+                            if(text != ""){
+                              isAgeInserted = true;
+                              isValidAge(text) ? ScaffoldMessenger.of(context).hideCurrentMaterialBanner() : ScaffoldMessenger.of(context).showMaterialBanner(appBanner(text: "Invalid age", context: context));
+                            } else{
+                              isAgeInserted = false;
+                            }
                           },
                           decoration: const InputDecoration(
                             enabledBorder: UnderlineInputBorder(
@@ -437,11 +441,14 @@ class _HomeState extends State<Home> {
     return false;
   }
 
-  Future? loadResult({required BuildContext context}) {
-    bool shouldProceed= isValidAge(_editingController.text.toString());
-    if (!shouldProceed) {
-      (!shouldProceed) ? ScaffoldMessenger.of(context).showMaterialBanner(appBanner(text: "Invalid age", context: context)) : null;
-      return null;
+  Future loadResult({required BuildContext context}) {
+    if(!isAgeInserted){
+      ScaffoldMessenger.of(context).showMaterialBanner(appBanner(text: "Please enter your age first", context: context,isError: false));
+      return Future.value();
+    }
+    if (!isValidAge(_editingController.text.toString())) {
+      ScaffoldMessenger.of(context).showMaterialBanner(appBanner(text: "Invalid age", context: context));
+      return Future.value();
     }
     return Navigator.pushNamed(
       context,
