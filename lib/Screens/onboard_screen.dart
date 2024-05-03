@@ -2,6 +2,7 @@ import 'package:bmi_calculator/enums/route_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:bmi_calculator/Models/onboarding_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardScreen extends StatefulWidget {
   const OnboardScreen({super.key});
@@ -13,11 +14,25 @@ class OnboardScreen extends StatefulWidget {
 class _OnboardScreenState extends State<OnboardScreen> {
   int currentIndex = 0;
   late PageController _pageController;
+  late final SharedPreferences preferences;
 
   @override
   void initState() {
     _pageController = PageController(initialPage: 0);
+    initializeSharedPreference();
     super.initState();
+  }
+
+  Future<void> initializeSharedPreference() async {
+    preferences = await SharedPreferences.getInstance();
+    bool? hasSeenOnboard = preferences.getBool("hasSeenOnboard");
+    if (hasSeenOnboard != null) {
+      skipScreen();
+    }
+  }
+
+  void skipScreen() {
+    Navigator.pushReplacementNamed(context, Routes.home.toString());
   }
 
   @override
@@ -142,13 +157,17 @@ class _OnboardScreenState extends State<OnboardScreen> {
     ));
   }
 
-  void pageController(){
+  void pageController() {
     if (currentIndex == contents.length - 1) {
+      setPreference();
       Navigator.pushReplacementNamed(context, Routes.home.toString());
     }
     _pageController.nextPage(
-        duration: const Duration(milliseconds: 1000),
-        curve: Curves.bounceOut);
+        duration: const Duration(milliseconds: 1000), curve: Curves.bounceOut);
+  }
+
+  Future<void> setPreference() async{
+    preferences.setBool("hasSeenOnboard", true);
   }
 
   Container buildDot(int index, BuildContext context) {

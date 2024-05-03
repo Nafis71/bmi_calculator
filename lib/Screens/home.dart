@@ -71,7 +71,7 @@ class _HomeState extends State<Home> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   const SizedBox(
-                    height: 30,
+                    height: 15,
                   ),
                   Row(
                     mainAxisSize: MainAxisSize.max,

@@ -1,13 +1,15 @@
 import 'package:bmi_calculator/Models/person_data.dart';
 import 'package:bmi_calculator/Screens/onboard_screen.dart';
 import 'package:bmi_calculator/Screens/result.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:bmi_calculator/enums/route_enum.dart';
 
 import 'Screens/home.dart';
 
 main() {
-  runApp(const MyApp());
+  runApp(DevicePreview(
+      enabled: false, builder: (BuildContext context) => const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -17,6 +19,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
       initialRoute: Routes.onboarding.toString(),
       onGenerateRoute: (routeSettings) => generateRoute(routeSettings),
     );

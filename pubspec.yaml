@@ -40,6 +40,8 @@ dependencies:
   wheel_slider: ^1.2.1
   syncfusion_flutter_gauges: ^25.1.42
   animated_hint_textfield: ^1.0.1
+  device_preview: ^1.1.0
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
   flutter_test:
