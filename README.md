@@ -1,16 +1,18 @@
-# bmi_calculator
+# Bmi Calculator
 
-A new Flutter project.
+<p align =""justify>The BMI calculator is an app that can calculate an individual's BMI based on their height and weight, for both adults and nonadults. 
+Additionally, its UI is attractive, and it is so user-friendly that individuals of all ages can easily use it.</p>
 
-## Getting Started
+## Live Preview Link
 
-This project is a starting point for a Flutter application.
+https://bmicalculator-tonmoy.netlify.app/
 
-A few resources to get you started if this is your first Flutter project:
+# Onboarding Screen
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+<img align="left" alt ="Doctor Babu" width ="200" src="https://github.com/Nafis71/bmi_calculator/assets/57575805/7f74bec4-061d-4bbb-b134-df76b217da15"></img>
+<img alt ="Doctor Babu" width ="200" src="https://github.com/Nafis71/bmi_calculator/assets/57575805/138ac2cb-37f0-47eb-abfd-da04be098468"></img>
+<img alt ="Doctor Babu" width ="200" src="https://github.com/Nafis71/bmi_calculator/assets/57575805/a6034b9d-50e2-476d-99ab-3645860f7883"></img>
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Home Screen
+<img align="left" alt ="Doctor Babu" width ="200" src="https://github.com/Nafis71/bmi_calculator/assets/57575805/592d7e5d-666f-402a-8474-d074ea4a2e0a"></img>
+<img alt ="Doctor Babu" width ="200" src="https://github.com/Nafis71/bmi_calculator/assets/57575805/6146692e-1c1b-4ab9-a9a9-48ee89a977e5"></img>
