@@ -1,12 +1,14 @@
-import 'package:animated_hint_textfield/animated_hint_textfield.dart';
+import 'package:bmi_calculator/Models/home_screen_handler.dart';
 import 'package:bmi_calculator/Models/person_data.dart';
-import 'package:bmi_calculator/Screens/HomeScreenWidgets/app_banner.dart';
-import 'package:bmi_calculator/Screens/HomeScreenWidgets/gender_container.dart';
+import 'package:bmi_calculator/Widgets/app_banner.dart';
+import 'package:bmi_calculator/Widgets/custom_textfield.dart';
+import 'package:bmi_calculator/Widgets/gender_container.dart';
+import 'package:bmi_calculator/Widgets/header_text.dart';
+import 'package:bmi_calculator/Widgets/height_slider.dart';
+import 'package:bmi_calculator/Widgets/metric_widget.dart';
+import 'package:bmi_calculator/Widgets/weight_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:wheel_slider/wheel_slider.dart';
-
-import '../enums/route_enum.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -19,17 +21,19 @@ class _HomeState extends State<Home> {
   String gender = "male";
   double _heightValue = 5.0, interval = 0.1;
   int _weightValue = 0,
-      totalCount = 60,
-      minHeight = 4,
+      totalHeightCount = 60,
+      initValue = 4,
       maxWeight = 180,
       selectedWeight = 50;
   bool isFeet = true, isKg = true, isAgeInserted = false;
 
   late TextEditingController _editingController;
+  late HomeScreenHandler uiHandler;
 
   @override
   void initState() {
     _editingController = TextEditingController();
+    uiHandler = HomeScreenHandler();
     super.initState();
   }
 
@@ -44,11 +48,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text(
-          "BMI Calculator",
-          style: TextStyle(fontWeight: FontWeight.w700),
-        ),
+        title: const Text("BMI Calculator"),
         actions: [
           IconButton(
               onPressed: () {},
@@ -105,11 +105,7 @@ class _HomeState extends State<Home> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        const Text(
-                          "Height",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w700),
-                        ),
+                        const HeaderText(text: "Height"),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           mainAxisSize: MainAxisSize.max,
@@ -120,19 +116,12 @@ class _HomeState extends State<Home> {
                                   isFeet = true;
                                   _heightValue = 5.0;
                                   interval = 0.1;
-                                  totalCount = 60;
-                                  minHeight = 4;
+                                  totalHeightCount = 60;
+                                  initValue = 4;
                                 });
                               },
                               splashColor: Colors.transparent,
-                              child: Text(
-                                "Feet",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                  color: (isFeet) ? Colors.green : Colors.black,
-                                ),
-                              ),
+                              child: MetricWidget(checkCondition: isFeet, text: "Feet"),
                             ),
                             const SizedBox(
                               width: 10,
@@ -142,20 +131,13 @@ class _HomeState extends State<Home> {
                                 setState(() {
                                   isFeet = false;
                                   _heightValue = 1.0;
-                                  minHeight = 1;
-                                  totalCount = int.parse(("${2.toInt()}2"));
+                                  initValue = 1;
+                                  totalHeightCount =
+                                      int.parse(("${2.toInt()}2"));
                                 });
                               },
                               splashColor: Colors.transparent,
-                              child: Text(
-                                "Meter",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                  color:
-                                      (!isFeet) ? Colors.green : Colors.black,
-                                ),
-                              ),
+                              child: MetricWidget(checkCondition: !isFeet, text: "Meter"),
                             ),
                           ],
                         )
@@ -171,27 +153,24 @@ class _HomeState extends State<Home> {
                       children: [
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.8,
-                          child: WheelSlider(
-                            pointerColor: Colors.green,
-                            interval: 0.1,
-                            // this field is used to show decimal/double values
-                            totalCount: totalCount,
-                            initValue: minHeight,
-                            isInfinite: true,
-                            enableAnimation: true,
+                          child: HeightSlider(
+                            totalHeightCount: totalHeightCount,
+                            initValue: initValue,
+                            isFeet: isFeet,
                             onValueChanged: (val) {
-                              setState(() {
-                                if (isFeet) {
-                                  _heightValue =
-                                      double.parse((val + 1).toString());
-                                } else if (!isFeet) {
-                                  _heightValue = val;
-                                }
-                              });
+                              setState(
+                                () {
+                                  if (isFeet) {
+                                    _heightValue =
+                                        double.parse((val + 1).toString());
+                                  } else if (!isFeet) {
+                                    _heightValue = val;
+                                  }
+                                },
+                              );
                             },
-                            hapticFeedbackType: HapticFeedbackType.vibrate,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -207,7 +186,7 @@ class _HomeState extends State<Home> {
                               ? "${_heightValue.toStringAsFixed(1)} feet"
                               : "${_heightValue.toStringAsFixed(1)} meters",
                           style: const TextStyle(
-                              fontSize: 27,
+                              fontSize: 26,
                               fontWeight: FontWeight.w700,
                               color: Colors.green),
                         ),
@@ -221,11 +200,7 @@ class _HomeState extends State<Home> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        const Text(
-                          "Weight",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w700),
-                        ),
+                        const HeaderText(text: "Weight"),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           mainAxisSize: MainAxisSize.max,
@@ -239,14 +214,7 @@ class _HomeState extends State<Home> {
                                 });
                               },
                               splashColor: Colors.transparent,
-                              child: Text(
-                                "Kg",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700,
-                                    color:
-                                        (isKg) ? Colors.green : Colors.black),
-                              ),
+                              child: MetricWidget(checkCondition: isKg, text: "Kg"),
                             ),
                             const SizedBox(
                               width: 10,
@@ -260,14 +228,7 @@ class _HomeState extends State<Home> {
                                 });
                               },
                               splashColor: Colors.transparent,
-                              child: Text(
-                                "Pound",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700,
-                                    color:
-                                        (!isKg) ? Colors.green : Colors.black),
-                              ),
+                              child: MetricWidget(checkCondition: !isKg, text: "Pound"),
                             ),
                           ],
                         )
@@ -275,40 +236,24 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 0.00),
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.8,
-                          child: WheelSlider.number(
-                            perspective: 0.009,
-                            totalCount: maxWeight,
-                            initValue: selectedWeight,
-                            isInfinite: false,
-                            enableAnimation: true,
-                            selectedNumberStyle: TextStyle(
-                              color: (_weightValue < 20)
-                                  ? Colors.redAccent
-                                  : Colors.green,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 22.0,
-                            ),
-                            unSelectedNumberStyle: const TextStyle(
-                              fontSize: 14.0,
-                              color: Colors.black54,
-                            ),
-                            currentIndex: _weightValue,
+                          child: WeightSlider(
+                            maxWeight: maxWeight,
+                            selectedWeight: selectedWeight,
+                            weightValue: _weightValue,
                             onValueChanged: (val) {
                               setState(() {
                                 _weightValue = val;
                               });
                             },
-                            hapticFeedbackType: HapticFeedbackType.heavyImpact,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -339,11 +284,7 @@ class _HomeState extends State<Home> {
                     children: [
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20.00),
-                        child: Text(
-                          "Age",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w700),
-                        ),
+                        child: HeaderText(text: "Age"),
                       )
                     ],
                   ),
@@ -356,39 +297,14 @@ class _HomeState extends State<Home> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.9,
                         height: 50,
-                        child: AnimatedTextField(
-                          style: const TextStyle(fontSize: 18),
-                          cursorColor: Colors.green,
-                          controller: _editingController,
-                          keyboardType: TextInputType.number,
-                          animationType: Animationtype.typer,
-                          hintTextStyle: const TextStyle(
-                            color: Colors.black,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          cursorOpacityAnimates: true,
-                          hintTexts: const [
-                            'Enter your age',
-                            'So that we can calculate',
-                            'BMI according to your age',
-                          ],
-                          onChanged: (text) {
-                            if(text != ""){
-                              isAgeInserted = true;
-                              isValidAge(text) ? ScaffoldMessenger.of(context).hideCurrentMaterialBanner() : ScaffoldMessenger.of(context).showMaterialBanner(appBanner(text: "Invalid age", context: context));
-                            } else{
-                              isAgeInserted = false;
-                            }
-                          },
-                          decoration: const InputDecoration(
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.green, width: 2)),
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.green, width: 2)),
-                            contentPadding: EdgeInsets.all(12),
-                          ),
+                        child: CustomTextField.animated(
+                            editingController: _editingController,
+                            listOfHints: const [
+                              'Enter your age',
+                              'So that we can calculate',
+                              'BMI according to your age',
+                            ],
+                            onChanged: (text) => textOnChanged(text),
                         ),
                       )
                     ],
@@ -407,17 +323,7 @@ class _HomeState extends State<Home> {
                   width: MediaQuery.of(context).size.width * 0.8,
                   height: 60,
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      foregroundColor: Colors.white,
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.00),
-                      ),
-                    ),
-                    onPressed: () {
-                      loadResult(context: context);
-                    },
+                    onPressed: loadResult,
                     child: const Text(
                       "Calculate BMI",
                       style:
@@ -433,28 +339,26 @@ class _HomeState extends State<Home> {
     );
   }
 
-  bool isValidAge(String text) {
-    int age = int.parse(text);
-    if (age > 0 && age >=2 && age <= 120) {
-      return true;
+  void textOnChanged(String text) {
+    if (text != "") {
+      isAgeInserted = true;
+      (uiHandler.getValidAge(text))
+          ? ScaffoldMessenger.of(context).hideCurrentMaterialBanner()
+          : ScaffoldMessenger.of(context).showMaterialBanner(
+              appBanner(text: "Invalid age", context: context),
+            );
+    } else {
+      isAgeInserted = false;
     }
-    return false;
   }
 
-  Future loadResult({required BuildContext context}) {
-    if(!isAgeInserted){
-      ScaffoldMessenger.of(context).showMaterialBanner(appBanner(text: "Please enter your age first", context: context,isError: false));
-      return Future.value();
-    }
-    if (!isValidAge(_editingController.text.toString())) {
-      ScaffoldMessenger.of(context).showMaterialBanner(appBanner(text: "Invalid age", context: context));
-      return Future.value();
-    }
-    return Navigator.pushNamed(
-      context,
-      Routes.result.toString(),
-      arguments: PersonData(gender, _heightValue, _weightValue, isFeet, isKg,
-          int.tryParse(_editingController.text.toString()) ?? 2),
+  void loadResult() {
+    uiHandler.getResult(
+      context: context,
+      isAgeInserted: isAgeInserted,
+      editingController: _editingController,
+      personData: PersonData(gender, _heightValue, _weightValue, isFeet, isKg,
+          int.tryParse(_editingController.text) ?? 2),
     );
   }
 }
