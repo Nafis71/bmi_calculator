@@ -42,6 +42,7 @@ dependencies:
   animated_hint_textfield: ^1.0.1
   device_preview: ^1.1.0
   shared_preferences: ^2.2.3
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
@@ -58,6 +59,12 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/appLogo.jpg"
+
 flutter:
 
   # The following line ensures that the Material Icons font is
