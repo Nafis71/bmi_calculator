@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:bmi_calculator/Models/bmi_message.dart';
 import 'package:bmi_calculator/Models/person_data.dart';
 import 'package:bmi_calculator/Widgets/bmi_range_adults.dart';
@@ -23,21 +22,9 @@ class _ResultState extends State<Result> {
   @override
   void initState() {
     (personData.age > 20) ? isAdult = true : isAdult = false;
-    bmi = calculateBmi();
+    bmi = personData.calculateBmi();
     super.initState();
   }
-
-  double calculateBmi() {
-    if (personData.isFeet) {
-      personData.setHeight = personData.height * 0.3048;
-    }
-    if (!personData.isKg) {
-      personData.setWeight =
-          (double.parse(personData.weight.toString()) * 0.45359237).toInt();
-    }
-    return personData.weight / (pow(personData.height, 2));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

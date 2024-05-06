@@ -357,7 +357,7 @@ class _HomeState extends State<Home> {
       context: context,
       isAgeInserted: isAgeInserted,
       editingController: _editingController,
-      personData: PersonData(gender, _heightValue, _weightValue, isFeet, isKg,
+      personData: PersonData(gender, _heightValue, _weightValue.toDouble(), isFeet, isKg,
           int.tryParse(_editingController.text) ?? 2),
     );
   }
